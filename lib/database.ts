@@ -17,7 +17,7 @@ export async function listReports(actor: string) {
     EXISTS(SELECT 1 FROM pondy.actions a WHERE a.report_id=r.id AND a.actor=${actor} AND a.kind='confirm') AS confirmed,
     EXISTS(SELECT 1 FROM pondy.actions a WHERE a.report_id=r.id AND a.actor=${actor} AND a.kind='clear') AS cleared,
     EXISTS(SELECT 1 FROM pondy.actions a WHERE a.report_id=r.id AND a.actor=${actor} AND a.kind='flag') AS flagged
-    FROM pondy.reports r WHERE r.observed_at>${Date.now()-TTL}
+    FROM pondy.reports r WHERE r.status IN ('red','orange','green') AND r.observed_at>${Date.now()-TTL}
     AND (SELECT COUNT(*) FROM pondy.actions a WHERE a.report_id=r.id AND a.kind='flag')<3
     ORDER BY r.observed_at DESC LIMIT 300`;
 }

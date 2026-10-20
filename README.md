@@ -58,7 +58,7 @@ The integration test refuses non-localhost targets. It checks cross-visitor pers
 ## Product behaviour
 
 - Coverage: 11.88–12.04° N, 79.73–79.87° E, an approximate product boundary rather than an official administrative boundary.
-- Reports need a map pin and condition; name and note are optional.
+- Reports need a map pin and condition; name and note are optional. Conditions are Waterlogged, Impassable, or Clear; puddle reports are not accepted.
 - Reports refresh every 20 seconds, need a fresh check after 2 hours, and expire after 6 hours.
 - Three device flags hide a report. Confirmation does not extend report expiry.
 - Rate limits and anonymous device cookies provide basic abuse controls, not verified identity.

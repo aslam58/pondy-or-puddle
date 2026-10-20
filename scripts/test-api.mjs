@@ -6,7 +6,7 @@ async function call(path,body,extra={}){const r=await fetch(base+path,{method:bo
 assert.equal((await call('/api/reports')).status,200);
 assert.equal((await call('/api/reports',{lat:0,lng:0,status:'green'})).status,400);
 assert.equal((await call('/api/reports',{lat:11.94,lng:79.81,status:'banana'})).status,400);
-assert.equal((await call('/api/reports',{lat:11.94,lng:79.81,status:'yellow'},{origin:'https://another-site.invalid'})).status,403);
+assert.equal((await call('/api/reports',{lat:11.94,lng:79.81,status:'orange'},{origin:'https://another-site.invalid'})).status,403);
 const created=await call('/api/reports',{lat:11.94,lng:79.81,status:'orange',street:'LOCAL QA ONLY',note:'Persistence check'});assert.equal(created.status,201);const id=created.data.id;
 const other=await fetch(base+'/api/reports').then(r=>r.json());assert.ok(other.reports.some(r=>r.id===id),'visible to a different anonymous visitor');
 assert.equal((await call(`/api/reports/${id}`,{action:'confirm'})).status,200);

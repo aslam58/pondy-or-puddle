@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS pondy.reports (
  note text NOT NULL CHECK (length(note)<=180),
  lat double precision NOT NULL CHECK (lat BETWEEN 11.88 AND 12.04),
  lng double precision NOT NULL CHECK (lng BETWEEN 79.73 AND 79.87),
- status text NOT NULL CHECK (status IN ('red','orange','yellow','green')),
+ status text NOT NULL CHECK (status IN ('red','orange','green')),
  created_at bigint NOT NULL,
  observed_at bigint NOT NULL,
  author uuid NOT NULL,

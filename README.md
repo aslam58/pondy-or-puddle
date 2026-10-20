@@ -1,6 +1,6 @@
 # Pondy or Puddle? — Vercel edition
 
-A no-login community flood-report map for urban Pondicherry. This version runs on standard Next.js on Vercel and PostgreSQL. It has no runtime dependency on Sites, Cloudflare Workers or D1. The existing Sites application remains unchanged until the migration is complete.
+A no-login community flood-report map for urban Pondicherry. This version runs on standard Next.js on Vercel and PostgreSQL. It has no runtime dependency on Sites, Cloudflare Workers or D1. Production: https://pondy-or-puddle.vercel.app. The old Sites address redirects to this site; its reporting APIs are retired.
 
 ## Local setup
 
@@ -69,3 +69,13 @@ The integration test refuses non-localhost targets. It checks cross-visitor pers
 ## Current migration state
 
 Private source repository: https://github.com/aslam58/pondy-or-puddle. Vercel project: moaslam1100-4479/pondy-or-puddle. Database: the private pondy schema in the existing Public Problems Puducherry Supabase project, selected by the owner after the free project limit prevented a new project. GitHub source updates use the connected GitHub account; deployments currently use the Vercel CLI. Automatic Git deployments require the owner to add a GitHub Login Connection in Vercel. Production verification and cutover are recorded in this chat.
+
+## Verified migration result
+
+- Vercel production deployment: `dpl_GRU8AAJ5AYjANncmRsvLf7As4zx7`, status READY.
+- Runtime functions execute in Mumbai (`bom1`).
+- Browser submission and confirmation were verified against the production Supabase database; the clearly labelled temporary test record was removed.
+- The authenticated source export contained zero production reports and zero actions. A final export was taken after the old write endpoints were retired.
+- The database login was checked for access to `pondy` and denied SELECT on the other application's `public.pp_reports`.
+- The Vercel production error-log scan returned zero error records during the migration window.
+- GitHub source is private. Automatic Git deploys are not connected: Vercel requires the owner to add a GitHub Login Connection. CLI deployments are working.

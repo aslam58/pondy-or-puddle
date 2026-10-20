@@ -32,5 +32,22 @@ ALTER TABLE pondy.reports ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pondy.actions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pondy.rate_limits ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON ALL TABLES IN SCHEMA pondy FROM PUBLIC;
--- The server uses the privileged database role in DATABASE_URL. No public Data API access.
+-- A dedicated application role can access only this private schema's tables.
+DO $$ BEGIN
+ IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname='pondy_app') THEN
+  CREATE ROLE pondy_app NOLOGIN NOINHERIT;
+ END IF;
+END $$;
+GRANT CONNECT ON DATABASE postgres TO pondy_app;
+GRANT USAGE ON SCHEMA pondy TO pondy_app;
+GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA pondy TO pondy_app;
+DO $$ DECLARE tbl text; BEGIN
+ FOREACH tbl IN ARRAY ARRAY['reports','actions','rate_limits'] LOOP
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname='pondy' AND tablename=tbl AND policyname='pondy_server_access') THEN
+   EXECUTE format('CREATE POLICY pondy_server_access ON pondy.%I FOR ALL TO pondy_app USING (true) WITH CHECK (true)',tbl);
+  END IF;
+ END LOOP;
+END $$;
+ALTER ROLE pondy_app SET search_path=pondy,pg_catalog;
+-- Enable LOGIN and set its random password separately; never put secrets in this file.
 COMMIT;

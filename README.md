@@ -16,7 +16,7 @@ npm run dev
 
 Use the chosen PostgreSQL provider's transaction pooler for Vercel. With Supabase, copy the actual transaction-pooler connection string from the project's Connect dialog; do not infer the pooler hostname. The server disables prepared statements, uses a small connection pool, and requires TLS for remote database hosts.
 
-`DATABASE_URL` and `NETWORK_HASH_SECRET` are server-only secrets. Do not prefix them with NEXT_PUBLIC_ and do not commit them. The database tables live in the private `pondy` schema, have row-level security enabled, and have no public policies. The server connection must use a database role permitted to access those tables (the schema owner works). No browser connects directly to the database.
+`DATABASE_URL` and `NETWORK_HASH_SECRET` are server-only secrets. Do not prefix them with NEXT_PUBLIC_ and do not commit them. The database tables live in the private `pondy` schema, have row-level security enabled, and have no public policies. The server uses a dedicated pondy_app login with grants and RLS policies only for the pondy tables. Configure its password separately from the tracked schema file. No browser connects directly to the database.
 
 ## Vercel deployment
 
@@ -68,4 +68,4 @@ The integration test refuses non-localhost targets. It checks cross-visitor pers
 
 ## Current migration state
 
-The Next.js production build and local PostgreSQL integration tests pass. GitHub destination, target hosted database and renewed Vercel access must be selected/connected before publication. No Vercel deployment or GitHub push has occurred yet.
+Private source repository: https://github.com/aslam58/pondy-or-puddle. Vercel project: moaslam1100-4479/pondy-or-puddle. Database: the private pondy schema in the existing Public Problems Puducherry Supabase project, selected by the owner after the free project limit prevented a new project. GitHub source updates use the connected GitHub account; deployments currently use the Vercel CLI. Automatic Git deployments require the owner to add a GitHub Login Connection in Vercel. Production verification and cutover are recorded in this chat.

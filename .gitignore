@@ -10,3 +10,4 @@ coverage/
 backups/
 .local-postgres/
 .local-pg-password
+.vercel

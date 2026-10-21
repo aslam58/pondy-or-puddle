@@ -79,3 +79,7 @@ Private source repository: https://github.com/aslam58/pondy-or-puddle. Vercel pr
 - The database login was checked for access to `pondy` and denied SELECT on the other application's `public.pp_reports`.
 - The Vercel production error-log scan returned zero error records during the migration window.
 - GitHub source is private. Automatic Git deploys are not connected: Vercel requires the owner to add a GitHub Login Connection. CLI deployments are working.
+
+## Languages
+
+Use the header தமிழ் / English switch. `?lang=ta` and `?lang=en` are shareable links. The selected language is saved on the device; on a first visit, a Tamil browser preference selects Tamil. The interface, weather, report actions and errors are localized. User-provided street names and notes stay in their original language.
